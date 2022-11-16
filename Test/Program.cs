@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Test
 {
@@ -6,14 +8,16 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(SecondMaxNumber(new int[] { 8,5,8,4,3,5,9 }));
+            Console.WriteLine(SecondMaxNumber(new int[] { 8, 5, 8, 4, 3, 5, 9 }));
             Console.WriteLine(IsAccordion("BApT6M7JbmCtHBQaT3mp&pm3TaQBHtCmbJ7M6TpAB"));
             Console.WriteLine(IsValidBrackets("{([([{}])])}"));
             Console.WriteLine(IsPerfectNumber(28));
+            Console.WriteLine(IsValidBracketsv2("(){([])}()(}"));
+           
 
         }
 
-        static int SecondMaxNumber(int [] nums)
+        static int SecondMaxNumber(int[] nums)
         {
             if (nums.Length < 1 || nums.Length > 100)
                 throw new Exception("invalid array");
@@ -33,17 +37,17 @@ namespace Test
                     }
                 }
             }
-            return nums[nums.Length-2];
+            return nums[nums.Length - 2];
 
         }
-        static bool IsAccordion (string value)
+        static bool IsAccordion(string value)
         {
-            if (value.Length%2==0)
+            if (value.Length % 2 == 0)
                 throw new Exception("invalid value");
-            var valueMiddlePoint = (value.Length-1)/2;
+            var valueMiddlePoint = (value.Length - 1) / 2;
             for (int i = 0; i < valueMiddlePoint; i++)
             {
-                if (value[i] != value[value.Length - 1-i])
+                if (value[i] != value[value.Length - 1 - i])
                     return false;
 
             }
@@ -54,11 +58,11 @@ namespace Test
         {
             if (value.Length % 2 != 0)
                 throw new Exception("invalid value");
-            var valueMiddlePoint =value.Length / 2;
+            var valueMiddlePoint = value.Length / 2;
             for (int i = 0; i < valueMiddlePoint; i++)
-            {                
+            {
                 if (ValidatePerBraces(value[i], value[value.Length - 1 - i]) == false)
-                    return false;               
+                    return false;
 
             }
             return true;
@@ -80,8 +84,39 @@ namespace Test
             }
             else
             {
-               return false;
+                return false;
             }
+
+        }
+
+        
+        static bool IsValidBracketsv2(string value)
+        {
+         
+            var stack = new Stack();
+            for (int i = 0; i < value.Length; i++)
+            {
+                if (value[i] == '(' || value[i] == '[' || value[i] == '{')
+                {
+                    stack.Push(value[i]);
+                }
+                else
+                {
+                    var oldVal = (char)stack.Pop();                    
+                    if (ValidatePerBraces(oldVal,value[i] ) == false)
+                        return false;
+                }
+            }
+            if (stack.Count == 0)
+            {
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+                
 
         }
         static bool ValidatePerBraces(char a, char b)
