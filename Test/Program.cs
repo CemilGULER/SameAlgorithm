@@ -119,6 +119,25 @@ namespace Test
                 
 
         }
+        
+        ///////
+        
+        int[] myNum = { 10, 20, 30, 40 };
+var maxNumber=myNum[0];
+
+for(int i = 1; i < myNum.Length; i++)
+{
+    if (myNum[i] > maxNumber)
+        maxNumber = myNum[i];
+}
+
+for(int i = 0; i < myNum.Length; i++)
+{
+    myNum[i] = maxNumber-myNum[i];
+
+}
+        
+        ////////
         static bool ValidatePerBraces(char a, char b)
         {
 
